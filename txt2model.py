@@ -10,6 +10,12 @@ logger = logging.getLogger(__name__)
 def parse_field(field):
     """
     Parse a field dictionary and return a properly formatted string
+
+    Args:
+        field (dict): A dictionary of model field arguements
+
+    Returns:
+        str: A formatted string of the model field
     """
     field_name = field.pop('field_name', None)
     field_type = field.pop('field_type', None)
@@ -35,7 +41,6 @@ def main(input_file, output_file):
         input_file (str): The input text file to read
         output_file (str): The output file to write generated models contents
     """
-
     if sys.version_info[0] < 3:
         infile = open(input_file, 'rU')
     else:
