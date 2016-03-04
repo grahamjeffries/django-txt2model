@@ -57,12 +57,11 @@ def main(input_file, output_file):
     infile.close()
 
     with open(output_file, 'w') as f:
-        f.write('from django.db import models\n\n\n')
+        f.write('from django.db import models\n')
         for model_name in row_dict.keys():
-            f.write('class %s(models.Model):\n' % model_name)
+            f.write('\n\nclass %s(models.Model):\n' % model_name)
             for field in row_dict[model_name]:
                 f.write(parse_field(field))
-            f.write('\n\n')
 
 
 if __name__ == '__main__':
