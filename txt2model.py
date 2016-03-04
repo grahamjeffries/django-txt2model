@@ -17,13 +17,23 @@ def parse_field(field):
     Returns:
         str: A formatted string of the model field
     """
+    quote_fields = ['db_column', 'db_tablespace', 'help_text',
+                    'unique_for_date', 'unique_for_month',
+                    'unique_for_year', 'verbose_name']
+    default_str_fields = ['CharField', 'EmailField', 'FileField',
+                          'FilePathField', 'ImageField',
+                          'GenericIPAddressField', 'SlugField',
+                          'TextField', 'URLField']
+    field_clean = {}
     field_name = field.pop('field_name', None)
     field_type = field.pop('field_type', None)
 
-    field_clean = {}
-
     for f in field:
         if field[f] != '':
+            if f in quote_fields:
+                field[f] = "'%s'" % field[f]
+            if field_type in default_str_fields:
+                field[f] = "'%s'" % field[f]
             field_clean[f] = field[f]
 
     kwargs = ', '.join(['%s=%s' % (f, field_clean[f]) for f in field_clean])
