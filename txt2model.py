@@ -24,6 +24,7 @@ def parse_field(field):
                           'FilePathField', 'ImageField',
                           'GenericIPAddressField', 'SlugField',
                           'TextField', 'URLField']
+    entry = ""
     field_clean = {}
     field_name = field.pop('field_name', None)
     field_type = field.pop('field_type', None)
@@ -36,10 +37,19 @@ def parse_field(field):
                 field[f] = "'%s'" % field[f]
             field_clean[f] = field[f]
 
+    try:
+        choices = field_clean['choices'].lstrip("'").rstrip("'")
+        choice_name = '%s_choices' % field_name
+        choice_name = choice_name.upper()
+        field_clean['choices'] = choice_name
+        entry += '    %s = %s\n' % (choice_name, choices)
+    except KeyError:
+        pass
+
     kwargs = ', '.join(['%s=%s' % (f, field_clean[f]) for f in field_clean])
-    entry = '    %s = models.%s(%s)\n' % (field_name,
-                                          field_type,
-                                          kwargs)
+    entry += '    %s = models.%s(%s)\n' % (field_name,
+                                           field_type,
+                                           kwargs)
     return entry
 
 
