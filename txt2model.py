@@ -29,6 +29,9 @@ def parse_field(field):
     field_name = field.pop('field_name', None)
     field_type = field.pop('field_type', None)
 
+    if field_name == '':
+        return ''
+
     for f in field:
         if field[f] != '':
             if f in quote_fields:
