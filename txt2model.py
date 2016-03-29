@@ -33,7 +33,7 @@ def parse_field(field):
         if field[f] != '':
             if f in quote_fields:
                 field[f] = "'%s'" % field[f]
-            if field_type in default_str_fields:
+            elif field_type in default_str_fields:
                 field[f] = "'%s'" % field[f]
             field_clean[f] = field[f]
 
