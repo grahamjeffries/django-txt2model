@@ -19,7 +19,7 @@ def parse_field(field):
     """
     quote_fields = ['db_column', 'db_tablespace', 'help_text',
                     'unique_for_date', 'unique_for_month',
-                    'unique_for_year', 'verbose_name']
+                    'unique_for_year', 'upload_to', 'verbose_name']
     default_str_fields = ['CharField', 'EmailField', 'FileField',
                           'FilePathField', 'ImageField',
                           'GenericIPAddressField', 'SlugField',
@@ -33,7 +33,7 @@ def parse_field(field):
         if field[f] != '':
             if f in quote_fields:
                 field[f] = "'%s'" % field[f]
-            elif field_type in default_str_fields:
+            if field_type in default_str_fields and f == 'default':
                 field[f] = "'%s'" % field[f]
             field_clean[f] = field[f]
 
