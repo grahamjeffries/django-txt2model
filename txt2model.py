@@ -50,6 +50,7 @@ def parse_field(field):
         pass
 
     kwargs = ', '.join(['%s=%s' % (f, field_clean[f]) for f in field_clean])
+    kwargs = kwargs.replace('fk_model=', '')
     entry += '    %s = models.%s(%s)\n' % (field_name,
                                            field_type,
                                            kwargs)
